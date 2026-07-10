@@ -7,11 +7,30 @@
 
 **Intentify AI** is a production-grade NLP application that classifies highly informal, code-mixed **Hinglish** (Hindi + English) customer support queries into 5 distinct intents. It features a fine-tuned `xlm-roberta-base` transformer model, an adversarial synthetic dataset generation pipeline, and a modern Dark Mode Chat UI powered by FastAPI.
 
+## 🎯 Problem Statement
+Customer support systems in South Asia struggle to parse queries because users rarely type in pure English or pure Hindi. Instead, they use **Hinglish**—a code-mixed language heavily reliant on Latin script, abbreviations, and informal slang (e.g., *"mera refund kb aayega", "app kaam ni karra"*). Standard NLP models fail on this unstructured data. **Intentify AI** solves this by fine-tuning a multilingual model on synthetically generated, adversarial edge-cases to accurately route customer intents, reducing manual support overhead.
+
+## 💻 Tech Stack
+- **Machine Learning:** PyTorch, Transformers (HuggingFace), Scikit-Learn
+- **Backend:** Python, FastAPI, SQLAlchemy, SQLite
+- **Frontend:** HTML5, Vanilla CSS (Glassmorphism), JavaScript, Chart.js
+- **DevOps:** Docker, Uvicorn
+- **Data Generation:** Groq API (LLaMA-3)
+
+## 🔄 System Workflow
+1. **User Input:** User submits a Hinglish query via the SPA Frontend.
+2. **API Authentication:** Request is sent to FastAPI backend using a secure `X-API-Key`.
+3. **Inference:** The query is tokenized and passed through the fine-tuned `xlm-roberta-base` model.
+4. **Logging:** The predicted intent and confidence score are instantly logged to the SQLite database.
+5. **UI Rendering:** The result is rendered with dynamic intent-colored micro-animations. If confidence is `< 60%`, it triggers a Human Agent Handoff.
+6. **RLHF Loop:** The user provides thumbs up/down feedback on the UI, which updates the database log, creating a curated dataset for future model fine-tuning.
+
 ## 🌟 Key Features
 - **Hinglish Understanding:** Handles extreme slang, typos, and abbreviations (e.g., *"mera order trckng ni hori"*, *"kya kachra bhej dia"*).
-- **Adversarial Hard-Negative Mining:** Model is trained on synthetic edge cases generated via Groq (LLaMA-3) to prevent shortcut learning (e.g., differentiating between *"otp for delivery"* vs *"otp for password reset"*).
-- **Confidence Thresholding:** Automatically routes out-of-domain (OOD) queries to a human agent if prediction confidence is `< 60%`.
-- **Premium Full-Stack UI:** A beautiful, responsive chat interface built with glassmorphism effects and micro-animations.
+- **Adversarial Hard-Negative Mining:** Model is trained on synthetic edge cases generated via Groq (LLaMA-3) to prevent shortcut learning.
+- **Premium SPA UI:** A beautiful, responsive Single Page Application (SPA) built with glassmorphism effects. Features a built-in **Analytics Dashboard** using Chart.js to visualize live model predictions.
+- **RLHF (Reinforcement Learning from Human Feedback):** Includes a thumbs up/down feedback loop in the chat UI, dynamically logging feedback to a SQLite database for future model fine-tuning.
+- **Production-Ready Architecture:** Containerized via **Docker**, backed by **SQLAlchemy/SQLite**, and secured with FastAPI **API Key Authentication**.
 
 ## 🧠 Supported Intents
 1. `complaint`: General dissatisfaction, bad quality, or rude customer service.
@@ -35,16 +54,20 @@ Because the fine-tuned XLM-RoBERTa model weights are **1.1 GB**, they are not in
    - `label_map.json`
 
 ### 2. Start the FastAPI Server
-Open a terminal in the project directory and install the requirements:
+
+**Option A: Using Docker (Recommended)**
+```bash
+docker-compose up --build
+```
+
+**Option B: Using Local Python Environment**
 ```bash
 pip install -r requirements.txt
+python -m uvicorn app:app --reload
 ```
-Start the local server:
-```bash
-uvicorn app:app --reload
-```
+
 ### 3. Test the App
-Open your web browser and go to **http://localhost:8000** to interact with the Chatbot UI!
+Open your web browser and go to **http://localhost:8000** to interact with the Chatbot UI! You can toggle between the chat and the Analytics Dashboard using the top header.
 
 ## 🛠️ Generating New Synthetic Data (Optional)
 If you want to generate more Hinglish training data:
