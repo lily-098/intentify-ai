@@ -22,8 +22,8 @@ def get_api_key(api_key_header: str = Security(api_key_header)):
         raise HTTPException(status_code=403, detail="Could not validate API KEY")
     return api_key_header
 
-# Path to the current directory where model files are located
-MODEL_PATH = "./"  
+# Path to the HuggingFace model repository
+MODEL_PATH = "Lily-28/intentify-hinglish-classifier"  
 
 # Global variables for model and tokenizer
 model = None
@@ -55,13 +55,13 @@ def load_model():
         model.eval() # Set to evaluation mode
         
         # Load the label mapping
-        label_map_path = os.path.join(MODEL_PATH, "label_map.json")
+        label_map_path = "./label_map.json"
         if os.path.exists(label_map_path):
             with open(label_map_path, "r") as f:
                 labels = json.load(f)
                 id2label = {int(k): v for k, v in labels["id2label"].items()}
         else:
-            print("Warning: label_map.json not found. Predictions will return raw IDs.")
+            print("Warning: label_map.json not found locally. Predictions will return raw IDs.")
             
         print("Model loaded successfully!")
     except Exception as e:
