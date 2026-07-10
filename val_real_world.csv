@@ -1,0 +1,51 @@
+text,label
+"box open tha jab delivery hui",complaint
+"kal item mila aur usme se aawaz aa rahi hai",complaint
+"customer care number pe 5 baar call kiya kisi ne nai uthaya",complaint
+"seal tooti hui thi product ki",complaint
+"jo color manga tha wo nahi bheja",complaint
+"expiry date nikal chuki hai iski",complaint
+"tracking me delivered dikha raha hai par mujhe nahi mila",complaint
+"box ke andar warranty card missing tha",complaint
+"size galat bhej diya aapne",complaint
+"delivery boy ne call nahi kiya seedha cancel kar diya",complaint
+"tracking link kaam nahi kar raha",order_status
+"status update nahi ho raha kal se",order_status
+"delivery boy ka number nahi dikh raha app me",order_status
+"page load nahi ho raha track order wala",order_status
+"otp nahi aa raha delivery accept karne ke liye",order_status
+"kaha paucha mera saman samajh nahi aa raha",order_status
+"tracking id invalid bata raha hai",order_status
+"order out for delivery tha par abhi tak aaya nahi",order_status
+"estimated delivery kal thi aaj kya status hai",order_status
+"courier partner ki website down hai",order_status
+"mujhe ye wapas karna hai",refund_request
+"kya mai isko return karke dusra le sakta hu",refund_request
+"is item ka return policy kya hai",refund_request
+"size fit nahi hua wapas le jao isko",refund_request
+"return request dalni hai",refund_request
+"paise wapas lene ka kya process hai",refund_request
+"return initiate kar do",refund_request
+"mujhe product nahi chahiye cancel and return",refund_request
+"bank account me transfer kab hoga wapas",refund_request
+"pickup kab hoga return ka",refund_request
+"app bilkul kaam nahi kar raha login error hai",general
+"password reset OTP nahi aa raha",general
+"profile update nahi ho rahi",general
+"app store se update kiya fir bhi crash ho raha hai",general
+"mera account block kyu dikha raha hai",general
+"dark mode kaise on karu app me",general
+"notifications nahi aa rahe",general
+"phone number change karna hai account me",general
+"kya ye original leather hai",product_query
+"iska XL size kab restock hoga",product_query
+"cod available hai kya is pin code pe",product_query
+"dono color me kya farak hai",product_query
+"mera odr kab ayga",order_status
+"refund ni aya abi tk",refund_request
+"bhai yr kya kachra bhej dia",complaint
+"app chal ni ra",general
+"cod h kya isme",product_query
+"psswd rst link send krdo",general
+"wps krna h yr",refund_request
+"trckng ni hori",order_status

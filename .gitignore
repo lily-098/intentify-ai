@@ -1,0 +1,16 @@
+# Trained Model Weights (Too large for GitHub)
+*.safetensors
+*.bin
+
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Virtual environments
+venv/
+env/
+.env
+
+# MacOS
+.DS_Store

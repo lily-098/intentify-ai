@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hinglish AI Support | Portfolio</title>
+    <!-- Use Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar or App Info -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo"></div>
+                <h1>Intentify</h1>
+            </div>
+            
+            <div class="info-card">
+                <h3>Intent Classifier</h3>
+                <p>This model classifies Hinglish customer support queries into 5 distinct intents using fine-tuned <strong>XLM-RoBERTa</strong>.</p>
+                
+                <div class="intents-list">
+                    <span class="badge intent-complaint">Complaint</span>
+                    <span class="badge intent-order">Order Status</span>
+                    <span class="badge intent-refund">Refund Request</span>
+                    <span class="badge intent-product">Product Query</span>
+                    <span class="badge intent-general">General / App Bug</span>
+                </div>
+            </div>
+
+
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-wrapper">
+            <header class="chat-header">
+                <div class="status-indicator">
+                    <div class="dot online"></div>
+                    <span>AI Model Active</span>
+                </div>
+            </header>
+
+            <div class="chat-history" id="chatHistory">
+                <!-- Welcome Message -->
+                <div class="message ai-message">
+                    <div class="avatar ai-avatar">AI</div>
+                    <div class="bubble">
+                        <p>Hi! I am the Hinglish Intent Classifier. Type a customer support message below to test my predictions.</p>
+                        <p class="hint">Try something like: <em>"mera order kahan hai"</em> or <em>"app me login nahi ho raha"</em>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <form id="chatForm">
+                    <input type="text" id="queryInput" placeholder="Type a Hinglish customer query..." autocomplete="off" required>
+                    <button type="submit" id="sendBtn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

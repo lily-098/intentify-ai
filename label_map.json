@@ -1,0 +1,16 @@
+{
+  "label2id": {
+    "complaint": 0,
+    "order_status": 1,
+    "refund_request": 2,
+    "product_query": 3,
+    "general": 4
+  },
+  "id2label": {
+    "0": "complaint",
+    "1": "order_status",
+    "2": "refund_request",
+    "3": "product_query",
+    "4": "general"
+  }
+}
