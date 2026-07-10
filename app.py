@@ -1,13 +1,26 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends, HTTPException, Security
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import json
 import os
+from sqlalchemy.orm import Session
+from sqlalchemy import text
+import models
+from database import engine, get_db
 
 app = FastAPI(title="Hinglish Intent Classifier")
+
+API_KEY = os.getenv("API_KEY", "intentify-secret-key")
+api_key_header = APIKeyHeader(name="X-API-Key")
+
+def get_api_key(api_key_header: str = Security(api_key_header)):
+    if api_key_header != API_KEY:
+        raise HTTPException(status_code=403, detail="Could not validate API KEY")
+    return api_key_header
 
 # Path to the current directory where model files are located
 MODEL_PATH = "./"  
@@ -20,8 +33,18 @@ id2label = {}
 class QueryRequest(BaseModel):
     text: str
 
+class FeedbackRequest(BaseModel):
+    log_id: int
+    feedback: int
+
 @app.on_event("startup")
 def load_model():
+    models.Base.metadata.create_all(bind=engine)
+    try:
+        with engine.connect() as conn:
+            conn.execute(text("ALTER TABLE query_logs ADD COLUMN feedback INTEGER DEFAULT 0"))
+    except Exception:
+        pass
     global model, tokenizer, id2label
     print(f"Loading model from {MODEL_PATH}...")
     
@@ -58,8 +81,21 @@ async def read_root():
             return f.read()
     return "<h1>UI not found. Make sure static/index.html exists!</h1>"
 
+@app.get("/dashboard", response_class=HTMLResponse)
+async def read_dashboard():
+    dashboard_path = os.path.join("static", "dashboard.html")
+    if os.path.exists(dashboard_path):
+        with open(dashboard_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return "<h1>Dashboard UI not found. Make sure static/dashboard.html exists!</h1>"
+
+@app.get("/api/logs")
+def get_logs(db: Session = Depends(get_db)):
+    logs = db.query(models.QueryLog).order_by(models.QueryLog.timestamp.desc()).limit(100).all()
+    return logs
+
 @app.post("/predict")
-def predict_intent(request: QueryRequest):
+def predict_intent(request: QueryRequest, db: Session = Depends(get_db), api_key: str = Depends(get_api_key)):
     if not model or not tokenizer:
         return {"error": "Model failed to load on startup."}
         
@@ -91,12 +127,32 @@ def predict_intent(request: QueryRequest):
     # Map the snake_case intents to readable UI intents
     readable_intent = intent.replace("_", " ").title() if intent != "fallback_to_human" else "Human Agent Handoff"
 
+    # Save to Database
+    db_log = models.QueryLog(
+        text=request.text,
+        predicted_intent=intent,
+        confidence=confidence
+    )
+    db.add(db_log)
+    db.commit()
+    db.refresh(db_log)
+
     return {
         "text": request.text,
         "predicted_intent": intent,
         "readable_intent": readable_intent,
-        "confidence": round(confidence, 4)
+        "confidence": round(confidence, 4),
+        "log_id": db_log.id
     }
+
+@app.post("/feedback")
+def submit_feedback(request: FeedbackRequest, db: Session = Depends(get_db), api_key: str = Depends(get_api_key)):
+    log = db.query(models.QueryLog).filter(models.QueryLog.id == request.log_id).first()
+    if not log:
+        raise HTTPException(status_code=404, detail="Log not found")
+    log.feedback = request.feedback
+    db.commit()
+    return {"status": "success"}
 
 if __name__ == "__main__":
     import uvicorn

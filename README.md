@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.12-blue?style=for-the-badge&logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch)
-![HuggingFace](https://img.shields.io/badge/HuggingFace-F9AB00?style=for-the-badge&logo=huggingface)
+![Kaggle](https://img.shields.io/badge/Kaggle-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white)
 
 **Intentify AI** is a production-grade NLP application that classifies highly informal, code-mixed **Hinglish** (Hindi + English) customer support queries into 5 distinct intents. It features a fine-tuned `xlm-roberta-base` transformer model, an adversarial synthetic dataset generation pipeline, and a modern Dark Mode Chat UI powered by FastAPI.
 

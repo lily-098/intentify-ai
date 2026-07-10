@@ -4,3 +4,6 @@ torch
 transformers
 pandas
 python-dotenv
+sqlalchemy
+pytest
+httpx

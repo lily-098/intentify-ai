@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intentify Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 90vh;
+            background: var(--bg-panel);
+            backdrop-filter: blur(24px);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            overflow-y: auto;
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        .chart-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+        }
+        h1, h2 { color: white; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Intentify AI Analytics</h1>
+        <p style="color: var(--text-secondary)">Overview of recent classification logs</p>
+        
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h2>Intent Distribution</h2>
+                <canvas id="intentChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>Confidence Distribution</h2>
+                <canvas id="confChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="/static/dashboard.js"></script>
+</body>
+</html>

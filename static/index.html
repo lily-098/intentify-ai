@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -40,31 +41,54 @@
             <header class="chat-header">
                 <div class="status-indicator">
                     <div class="dot online"></div>
-                    <span>AI Model Active</span>
+                    <span id="headerTitle">AI Model Active</span>
+                </div>
+                <div class="header-actions">
+                    <button id="toggleViewBtn" class="action-btn">📊 Dashboard</button>
+                    <button id="clearBtn" class="clear-btn">Clear Chat</button>
                 </div>
             </header>
 
-            <div class="chat-history" id="chatHistory">
-                <!-- Welcome Message -->
-                <div class="message ai-message">
-                    <div class="avatar ai-avatar">AI</div>
-                    <div class="bubble">
-                        <p>Hi! I am the Hinglish Intent Classifier. Type a customer support message below to test my predictions.</p>
-                        <p class="hint">Try something like: <em>"mera order kahan hai"</em> or <em>"app me login nahi ho raha"</em>.</p>
+            <div id="chatView" style="display: flex; flex-direction: column; flex-grow: 1; overflow: hidden;">
+                <div class="chat-history" id="chatHistory">
+                    <!-- Welcome Message -->
+                    <div class="message ai-message">
+                        <div class="avatar ai-avatar">AI</div>
+                        <div class="bubble">
+                            <p>Hi! I am the Hinglish Intent Classifier. Type a customer support message below to test my predictions.</p>
+                            <p class="hint">Try something like: <em>"mera order kahan hai"</em> or <em>"app me login nahi ho raha"</em>.</p>
+                        </div>
                     </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <form id="chatForm">
+                        <input type="text" id="queryInput" placeholder="Type a Hinglish customer query..." autocomplete="off" required>
+                        <button type="submit" id="sendBtn">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </form>
                 </div>
             </div>
 
-            <div class="chat-input-container">
-                <form id="chatForm">
-                    <input type="text" id="queryInput" placeholder="Type a Hinglish customer query..." autocomplete="off" required>
-                    <button type="submit" id="sendBtn">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                </form>
+            <!-- Dashboard View -->
+            <div id="dashboardView" style="display: none; flex-direction: column; flex-grow: 1; overflow-y: auto; padding: 40px;">
+                <h1 style="color: white; margin-bottom: 8px;">Intentify AI Analytics</h1>
+                <p style="color: var(--text-secondary); margin-bottom: 40px;">Overview of recent classification logs</p>
+                
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h2 style="color: white; margin-bottom: 16px; font-size: 18px;">Intent Distribution</h2>
+                        <canvas id="intentChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h2 style="color: white; margin-bottom: 16px; font-size: 18px;">Confidence Distribution</h2>
+                        <canvas id="confChart"></canvas>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
