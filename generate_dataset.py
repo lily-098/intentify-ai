@@ -2,8 +2,10 @@ import os
 import pandas as pd
 import requests
 import time
+from dotenv import load_dotenv
 
-API_KEY = "YOUR_GROQ_API_KEY_HERE"
+load_dotenv()
+API_KEY = os.getenv("GROQ_API_KEY", "YOUR_GROQ_API_KEY_HERE")
 BASE_URL = "https://api.groq.com/openai/v1"
 HEADERS = {
     "Authorization": f"Bearer {API_KEY}",
