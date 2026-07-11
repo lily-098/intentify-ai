@@ -5,7 +5,7 @@
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch)
 ![Kaggle](https://img.shields.io/badge/Kaggle-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white)
 
-**Intentify AI** is a production-grade NLP application that classifies highly informal, code-mixed **Hinglish** (Hindi + English) customer support queries into 5 distinct intents. It features a fine-tuned `xlm-roberta-base` transformer model, an adversarial synthetic dataset generation pipeline, and a modern Dark Mode Chat UI powered by FastAPI.
+**Intentify AI** is a production-grade NLP application that classifies highly informal, code-mixed **Hinglish** (Hindi + English) customer support queries into 5 distinct intents. It features a fine-tuned `microsoft/Multilingual-MiniLM-L12-H384` transformer model, an adversarial synthetic dataset generation pipeline, and a modern Dark Mode Chat UI powered by FastAPI.
 
 ## 🎯 Problem Statement
 Customer support systems in South Asia struggle to parse queries because users rarely type in pure English or pure Hindi. Instead, they use **Hinglish**—a code-mixed language heavily reliant on Latin script, abbreviations, and informal slang (e.g., *"mera refund kb aayega", "app kaam ni karra"*). Standard NLP models fail on this unstructured data. **Intentify AI** solves this by fine-tuning a multilingual model on synthetically generated, adversarial edge-cases to accurately route customer intents, reducing manual support overhead.
@@ -20,7 +20,7 @@ Customer support systems in South Asia struggle to parse queries because users r
 ## 🔄 System Workflow
 1. **User Input:** User submits a Hinglish query via the SPA Frontend.
 2. **API Authentication:** Request is sent to FastAPI backend using a secure `X-API-Key`.
-3. **Inference:** The query is tokenized and passed through the fine-tuned `xlm-roberta-base` model.
+3. **Inference:** The query is tokenized and passed through the fine-tuned `Multilingual-MiniLM` model.
 4. **Logging:** The predicted intent and confidence score are instantly logged to the SQLite database.
 5. **UI Rendering:** The result is rendered with dynamic intent-colored micro-animations. If confidence is `< 60%`, it triggers a Human Agent Handoff.
 6. **RLHF Loop:** The user provides thumbs up/down feedback on the UI, which updates the database log, creating a curated dataset for future model fine-tuning.
@@ -41,7 +41,7 @@ Customer support systems in South Asia struggle to parse queries because users r
 
 ## 🚀 How to Run Locally
 
-Because the fine-tuned XLM-RoBERTa model weights are **1.1 GB**, they are not included in this repository. You must train/download the model first.
+Because the fine-tuned MiniLM model weights are **~470 MB**, they are not included in this repository. You must train/download the model first.
 
 ### 1. Download Model Weights
 1. Run the `train_model.py` script on Kaggle or Google Colab (requires T4 GPU).
