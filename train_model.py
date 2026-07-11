@@ -9,11 +9,11 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trai
 # =====================================================================
 # ---- EDIT THESE PATHS to match your uploaded Kaggle datasets ----
 # =====================================================================
-TRAIN_DATA_PATH = "/kaggle/input/hinglish-support/train_synthetic_augmented.csv"
-VAL_DATA_PATH = "/kaggle/input/hinglish-support/val_real_world.csv"
+TRAIN_DATA_PATH = "/kaggle/input/datasets/lilygeorge/new-ds/train_synthetic_augmented.csv"
+VAL_DATA_PATH = "/kaggle/input/datasets/lilygeorge/new-ds/val_real_world.csv"
 
 OUTPUT_DIR = "/kaggle/working/model"
-BASE_MODEL = "xlm-roberta-base"
+BASE_MODEL = "l3cube-pune/hing-roberta"
 
 # =====================================================================
 # ---- OPTIMIZED HYPERPARAMETERS ----

@@ -22,8 +22,8 @@ def get_api_key(api_key_header: str = Security(api_key_header)):
         raise HTTPException(status_code=403, detail="Could not validate API KEY")
     return api_key_header
 
-# Path to the HuggingFace model repository
-MODEL_PATH = "Lily-28/intentify-hinglish-classifier"  
+# Path to the local model repository
+MODEL_PATH = "./"  
 
 # Global variables for model and tokenizer
 model = None
